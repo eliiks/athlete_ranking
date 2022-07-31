@@ -26,14 +26,14 @@ class Participation
     /**
      * @var Event|null
      * @ORM\ManyToOne(targetEntity=Event::class)
-     * @ORM\JoinColumn(name="event_id", nullable=false, referencedColumnName="id")
+     * @ORM\JoinColumn(name="event_id", nullable=false)
      */
     private ?Event $event_id = null;
 
     /**
      * @var Athlete|null
      * @ORM\ManyToOne(targetEntity=Athlete::class)
-     * @ORM\JoinColumn(name="athlete_id", nullable=false, referencedColumnName="id")
+     * @ORM\JoinColumn(name="athlete_id", nullable=false)
      */
     private ?Athlete $athlete_id = null;
 

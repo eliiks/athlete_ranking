@@ -16,27 +16,27 @@ class Administrator
      * @ORM\GeneratedValue
      * @ORM\Column
      */
-    private ?int $id = null;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $login = null;
+    private ?string $login;
 
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $password = null;
+    private ?string $password;
 
     /**
-     * @var Club|null
+     * @var Club
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="administrators")
      * @ORM\JoinColumn(
-     *     nullable=false,
-     *     referencedColumnName="id"
+     *     name="club_id",
+     *     nullable=false
      * )
      */
-    private ?Club $club_id = null;
+    private ?Club $club_id;
 
     public function getId(): ?int
     {

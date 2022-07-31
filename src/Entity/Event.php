@@ -32,8 +32,8 @@ class Event
      * @var Club|null
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="events")
      * @ORM\JoinColumn(
-     *     nullable=false,
-     *     referencedColumnName="id"
+     *     name="club_id",
+     *     nullable=false
      * )
      */
     private ?Club $club_id = null;

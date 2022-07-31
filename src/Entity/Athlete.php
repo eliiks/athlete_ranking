@@ -31,14 +31,14 @@ class Athlete
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $nb_points = null;
+    private ?int $nb_points = 0;
 
     /**
      * @var Club|null
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="athletes")
      * @ORM\JoinColumn(
-     *     nullable=false,
-     *     referencedColumnName="id"
+     *     name="club_id",
+     *     nullable=false
      * )
      */
     private ?Club $club_id = null;
@@ -47,8 +47,8 @@ class Athlete
      * @var Category|null
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="athletes")
      * @ORM\JoinColumn(
-     *     nullable=false,
-     *     referencedColumnName="id"
+     *     name="categorie_id",
+     *     nullable=false
      * )
      */
     private ?Category $categorie_id = null;
