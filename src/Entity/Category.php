@@ -37,7 +37,7 @@ class Category
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="categorie_id")
+     * @ORM\OneToMany(targetEntity=AthleteFixtures::class, mappedBy="categorie_id")
      */
     private Collection $athletes;
 

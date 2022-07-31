@@ -37,7 +37,7 @@ class Club
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="club_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=AthleteFixtures::class, mappedBy="club_id", orphanRemoval=true)
      */
     private Collection $athletes;
 
@@ -49,7 +49,7 @@ class Club
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="club_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=EventFixtures::class, mappedBy="club_id", orphanRemoval=true)
      */
     private Collection $events;
 

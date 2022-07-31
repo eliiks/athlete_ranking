@@ -40,7 +40,7 @@ class AthleteRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Athlete[] Returns an array of Athlete objects
+//     * @return AthleteFixtures[] Returns an array of AthleteFixtures objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class AthleteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Athlete
+//    public function findOneBySomeField($value): ?AthleteFixtures
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')
