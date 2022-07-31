@@ -18,8 +18,14 @@
     </style>
 
     <div class="example-wrapper">
-        <a href={{ path("athlete_rechercheAthlete", {"clubId":clubId}) }}>
+        <a href={{ path("athlete_rechercheAthleteAction", {"clubId":clubId}) }}>
             Rechercher une personne
+        </a>
+    </div>
+
+    <div class="example-wrapper">
+        <a href={{ path("athlete_classementCategorieAction", {"clubId":clubId}) }}>
+            Classement par catégorie
         </a>
     </div>
 

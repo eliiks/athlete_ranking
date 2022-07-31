@@ -17,7 +17,13 @@
         }
     </style>
 
-    {{ clubId }}
+    {{ dump(athletesFromClub) }}
 
+    <select name="athlete">
+        <option value="">--Choisissez un athlete--</option>
+        {% for athlete in athletesFromClub %}
+            <option value="{{ athlete.id }}"> {{ athlete.getFirstName() }} </option>
+        {% endfor %}
+    </select>
 
 {% endblock %}
