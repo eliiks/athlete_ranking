@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -37,7 +38,7 @@ class Category
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=AthleteFixtures::class, mappedBy="categorie_id")
+     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="categorie_id")
      */
     private Collection $athletes;
 
