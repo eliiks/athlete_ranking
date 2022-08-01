@@ -42,13 +42,6 @@ class AdminController extends AbstractController
      * @Route("/admin/accueil", name="admin_accueil")
      */
     public function adminAccueilAction(ManagerRegistry $doctrine){
-        if(isset($user)){
-            if($passwordHasher->isPasswordValid($user,'dieu')){
-                dump($user);
-            }else{
-                dump("shit");
-            }
-        }
 
         return $this->render("accueil/index.html.twig");
     }
