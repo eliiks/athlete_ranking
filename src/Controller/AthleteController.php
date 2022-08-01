@@ -67,15 +67,15 @@ class AthleteController extends AbstractController
     {
 
         $em = $doctrine->getManager();
-        $athleteRep = $em->getRepository('App\Entity\Athlete');
-
-        $athleteFromClub = $athleteRep->findBy(array('club' => $clubId));
-        dump($athleteFromClub);
+//        $athleteRep = $em->getRepository('App\Entity\Athlete');
+//
+//        $athleteFromClub = $athleteRep->findBy(array('club' => $clubId));
+//        dump($athleteFromClub);
 
         $catRep = $em->getRepository('App\Entity\Category');
         $allCats = $catRep->findAll();
-        return $this->render("athlete/selectParCategorie.html.twig", [
-            'athletesFromClub' => $athleteFromClub,
+        return $this->render("athlete/selectCategorie.html.twig", [
+            'clubId' => $clubId,
             'allCats' => $allCats,
         ]);
 
@@ -84,34 +84,39 @@ class AthleteController extends AbstractController
 
 
 
-    /**
-     * @Route("/choixCategorie", name="_choixCategorie")
-     */
-    public function choixCategorieAction(): Response
-    {
-        if(isset($_POST["leclub"])) {
-            return $this->render('athlete/recherche.html.twig', [
-                'clubId'=> $_POST["leclub"]
-            ]);
-        }
-    }
-
-
-
-//    // RESULTAT DE SELECT PAR CATEGORIE : 4
 //    /**
-//     * @Route("/athleteCategorie/{athletesFromClub}", name="_athletesCategorieAction", requirements={"athletesFromClub":"[a-z][A-Z]+"})
+//     * @Route("/choixCategorie", name="_choixCategorie")
 //     */
-//    public function athletesCategorieAction(ManagerRegistry $doctrine, String $athletesFromClub): Response
+//    public function choixCategorieAction(): Response
 //    {
-//        if(isset($_POST["lacat"])) {
-//            return $this->render('athlete/afficheCategorieAthlete.html.twig', [
-//                'lacat'=> $_POST["lacat"],
-//                'athletesFromClub' => $athletesFromClub
+//        if(isset($_POST["leclub"])) {
+//            return $this->render('athlete/recherche.html.twig', [
+//                'clubId'=> $_POST["leclub"]
 //            ]);
 //        }
-//
 //    }
+
+
+
+    // RESULTAT DE SELECT PAR CATEGORIE : 4
+    /**
+     * @Route("/athleteCategorie/{clubId}", name="_athletesCategorieAction", requirements={"clubId":"[0-9]+"})
+     */
+    public function athletesCategorieAction(ManagerRegistry $doctrine, int $clubId): Response
+    {
+        if(isset($_POST["laCat"])) {
+            $em = $doctrine->getManager();
+            $athleteRep = $em->getRepository('App\Entity\Athlete');
+            $athletesCat = $athleteRep->findBy(array('club' => $clubId, 'category' => $_POST["laCat"]));
+
+
+            return $this->render('athlete/afficheCategorieAthlete.html.twig', [
+                'laCat'=> $_POST["laCat"],
+                'athletesCat' => $athletesCat
+            ]);
+        }
+
+    }
 
 
 

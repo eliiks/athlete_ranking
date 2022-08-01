@@ -17,13 +17,15 @@
         }
     </style>
 
-    {{ dump(athletesFromClub) }}
 
-    <select name="athlete">
-        <option value="">--Choisissez un athlete--</option>
-        {% for athlete in athletesFromClub %}
-            <option value="{{ athlete.id }}"> {{ athlete.getFirstName() }} </option>
+<form method="post" action="{{ path("athlete_athletesCategorieAction", {"clubId":clubId}) }} ">
+    <select name="laCat">
+        <option value="">--Choisissez une categorie--</option>
+        {% for cat in allCats %}
+            <option value="{{ cat.id }}"> {{ cat.getLongName() }} </option>
         {% endfor %}
     </select>
+    <input type="submit" value="Valider"/>
+</form>
 
 {% endblock %}
