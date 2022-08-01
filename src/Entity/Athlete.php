@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AthleteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,6 +21,7 @@ class Athlete
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Length(min=2, max=45)
      */
     private ?string $firstName = null;
 

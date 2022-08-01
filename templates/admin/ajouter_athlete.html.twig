@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1> Ajouter un nouvel athlète</h1>
+    <form method="post" action="{{ path("admin_ajouter_athlete") }}">
+        <div>
+            <label for="first_name"> Prénom </label>
+            <input type="text" name="first_name" required/>
+        </div>
+        <br/>
+        <div>
+            <label for="last_name"> Nom </label>
+            <input type="text" name="last_name" required/>
+        </div>
+        <br/>
+        <div>
+            <label for="category"> Catégorie </label>
+            <select name="category">
+                {% for category in categories %}
+                    <option value="{{category.id}}"> {{ category.longName }} ({{ category.shortName }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br/>
+
+
+        <button type="submit"> Confirmer </button>
+    </form>
+{% endblock %}

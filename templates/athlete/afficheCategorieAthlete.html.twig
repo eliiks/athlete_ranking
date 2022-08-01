@@ -30,12 +30,14 @@
             <td> Nom </td>
             <td> Points </td>
         </tr>
-        {% for i in 0..athletesCat|length-1 %}
+        {% set i = 1 %}
+        {% for athlete in athletesCat %}
         <tr>
-                <td> {{ i+1 }} </td>
-                <td> {{ athletesCat[i].getFirstName() }} </td>
-                <td> {{ athletesCat[i].getLastName() }} </td>
-                <td> {{ athletesCat[i].getNbPoints() }} </td>
+                <td> {{ i }} </td>
+                <td> {{ athlete.getFirstName() }} </td>
+                <td> {{ athlete.getLastName() }} </td>
+                <td> {{ athlete.getNbPoints() }} </td>
+                {% set i = i + 1 %}
         </tr>
         {% endfor %}
         </tbody>
