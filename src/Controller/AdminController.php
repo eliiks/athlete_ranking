@@ -10,18 +10,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-/**
- * @Route("/admin", name="admin")
- */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/connexion",name="_connexion")
+     * @Route("/connexion",name="connexion")
      */
     public function connexionAction(AuthenticationUtils $authenticationUtils): Response
     {
+        //Si déjà connecté, alors on redirige vers accueil admin
         if ($this->getUser()) {
-             return $this->redirectToRoute('accueil');
+             return $this->redirectToRoute('admin_accueil');
         }
 
         // get the login error if there is one
@@ -33,11 +31,17 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/check", name="_check")
+     * @Route("/deconnexion",name="deconnexion")
      */
-    public function checkAction(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher){
-        $user = $doctrine->getManager()->getRepository('App\Entity\Administrator')->find(19);
+    public function logout(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
 
+    /**
+     * @Route("/admin/accueil", name="admin_accueil")
+     */
+    public function adminAccueilAction(ManagerRegistry $doctrine){
         if(isset($user)){
             if($passwordHasher->isPasswordValid($user,'dieu')){
                 dump($user);
@@ -47,13 +51,5 @@ class AdminController extends AbstractController
         }
 
         return $this->render("accueil/index.html.twig");
-    }
-
-    /**
-     * @Route("/deconnexion",name="_deconnexion")
-     */
-    public function logout(): void
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
