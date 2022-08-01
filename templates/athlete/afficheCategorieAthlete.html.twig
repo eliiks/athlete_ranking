@@ -17,17 +17,7 @@
         }
     </style>
 
-    <div class="example-wrapper">
-        <a href={{ path("athlete_rechercheAthleteAction", {"clubId":clubId}) }}>
-            Rechercher une personne
-        </a>
-    </div>
-
-    <div class="example-wrapper">
-        <a href={{ path("athlete_selectCategorieAction", {"clubId":clubId}) }}>
-            Classement par catégorie
-        </a>
-    </div>
-
+    {{ dump(athletesFromClub) }}
+    {{ dump(lacat) }}
 
 {% endblock %}

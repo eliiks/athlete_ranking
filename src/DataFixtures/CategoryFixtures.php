@@ -10,6 +10,7 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+
         $categorieBB = new Category();
         $categorieBB->setLongName("Baby Athlé");
         $categorieBB->setShortName("BB");
@@ -49,6 +50,11 @@ class CategoryFixtures extends Fixture
         $categorieES->setLongName("Espoirs");
         $categorieES->setShortName("ES");
         $manager->persist($categorieES);
+
+        $categorieMA = new Category();
+        $categorieMA->setLongName("Master");
+        $categorieMA->setShortName("MA");
+        $manager->persist($categorieMA);
 
         $manager->flush();
     }
