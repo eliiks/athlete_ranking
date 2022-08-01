@@ -29,7 +29,7 @@ class Administrator implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string")
      */
     private ?string $password = null;
 
