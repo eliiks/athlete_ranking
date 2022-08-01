@@ -51,6 +51,11 @@ class CategoryFixtures extends Fixture
         $categorieES->setShortName("ES");
         $manager->persist($categorieES);
 
+        $categorieSE = new Category();
+        $categorieSE->setLongName("Seniors");
+        $categorieSE->setShortName("SE");
+        $manager->persist($categorieSE);
+
         $categorieMA = new Category();
         $categorieMA->setLongName("Master");
         $categorieMA->setShortName("MA");
