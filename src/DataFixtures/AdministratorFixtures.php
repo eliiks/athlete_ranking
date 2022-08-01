@@ -22,7 +22,6 @@ class AdministratorFixtures extends Fixture
 
         $adminA = new Administrator();
         $adminA->setLogin('eliiks');
-        $this->hasher->
         $adminA->setPassword($this->hasher->hashPassword($adminA, "dieu"));
         $adminA->setClub($club[1]);
         $adminA->setRoles(['ROLE_ADMIN']);
