@@ -20,7 +20,7 @@
     <table>
         <thead>
         <tr>
-            <th colspan="2">Classement {{ nomCat.getLongName() }}</th>
+            <th colspan="2">Profil Athlete</th>
         </tr>
         </thead>
         <tbody>
@@ -30,15 +30,20 @@
             <td> Nom </td>
             <td> Points </td>
         </tr>
-        {% for i in 0..athletesCat|length-1 %}
+
         <tr>
-                <td> {{ i+1 }} </td>
-                <td> {{ athletesCat[i].getFirstName() }} </td>
-                <td> {{ athletesCat[i].getLastName() }} </td>
-                <td> {{ athletesCat[i].getNbPoints() }} </td>
+            <td> {{ position }} </td>
+            <td> {{ athleteRecherche[0].getFirstName() }} </td>
+            <td> {{ athleteRecherche[0].getLastName() }} </td>
+            <td> {{ athleteRecherche[0].getNbPoints() }} </td>
         </tr>
-        {% endfor %}
         </tbody>
     </table>
+
+
+
+
+
+
 
 {% endblock %}
