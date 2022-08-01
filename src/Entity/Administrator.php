@@ -6,10 +6,12 @@ use App\Repository\AdministratorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="administrator")
  * @ORM\Entity(repositoryClass=AdministratorRepository::class)
+ * @UniqueEntity("login", message="Login déjà pris")
  */
 class Administrator implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -23,7 +25,7 @@ class Administrator implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=45, unique=true)
      */
-    private ?string $login = null;
+    private $login;
 
     /**
      * @var string The hashed password
@@ -137,7 +139,7 @@ class Administrator implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ADMIN';
 
         return array_unique($roles);
     }
