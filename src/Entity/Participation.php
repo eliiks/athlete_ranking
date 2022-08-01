@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="participation",
  *     uniqueConstraints={
- *          @ORM\UniqueConstraint(name="participation_idx", columns={"event_id","athlete_id"})
+ *          @ORM\UniqueConstraint(name="participation_idx", columns={"event","athlete"})
  *     }
  * )
  * @ORM\Entity(repositoryClass=ParticipationRepository::class)
@@ -26,42 +26,42 @@ class Participation
     /**
      * @var Event|null
      * @ORM\ManyToOne(targetEntity=Event::class)
-     * @ORM\JoinColumn(name="event_id", nullable=false)
+     * @ORM\JoinColumn(name="event", nullable=false)
      */
-    private ?Event $event_id = null;
+    private ?Event $event = null;
 
     /**
      * @var Athlete|null
      * @ORM\ManyToOne(targetEntity=Athlete::class)
-     * @ORM\JoinColumn(name="athlete_id", nullable=false)
+     * @ORM\JoinColumn(name="athlete", nullable=false)
      */
-    private ?Athlete $athlete_id = null;
+    private ?Athlete $athlete = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEventId(): ?Event
+    public function getEvent(): ?Event
     {
-        return $this->event_id;
+        return $this->event;
     }
 
-    public function setEventId(?Event $event_id): self
+    public function setEvent(?Event $event): self
     {
-        $this->event_id = $event_id;
+        $this->event = $event;
 
         return $this;
     }
 
-    public function getAthleteId(): ?Athlete
+    public function getAthlete(): ?Athlete
     {
-        return $this->athlete_id;
+        return $this->athlete;
     }
 
-    public function setAthleteId(?Athlete $athlete_id): self
+    public function setAthlete(?Athlete $athlete): self
     {
-        $this->athlete_id = $athlete_id;
+        $this->athlete = $athlete;
 
         return $this;
     }

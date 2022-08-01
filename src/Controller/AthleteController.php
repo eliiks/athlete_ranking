@@ -71,7 +71,7 @@ class AthleteController extends AbstractController
         dump($clubId);
         $em = $doctrine->getManager();
         $athleteRep = $em->getRepository('App\Entity\Athlete');
-        $athleteFromClub = $athleteRep->findBy(array('club_id' => $clubId));
+        $athleteFromClub = $athleteRep->findBy(array('club' => $clubId));
         return $this->render("athlete/classementParCategorie.html.twig", [
             'athletesFromClub' => $athleteFromClub
         ]);

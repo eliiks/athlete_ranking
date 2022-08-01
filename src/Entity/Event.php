@@ -26,17 +26,17 @@ class Event
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $nb_points = null;
+    private ?int $nbPoints = null;
 
     /**
      * @var Club|null
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="events")
      * @ORM\JoinColumn(
-     *     name="club_id",
+     *     name="club",
      *     nullable=false
      * )
      */
-    private ?Club $club_id = null;
+    private ?Club $club = null;
 
     public function getId(): ?int
     {
@@ -57,24 +57,24 @@ class Event
 
     public function getNbPoints(): ?int
     {
-        return $this->nb_points;
+        return $this->nbPoints;
     }
 
-    public function setNbPoints(int $nb_points): self
+    public function setNbPoints(int $nbPoints): self
     {
-        $this->nb_points = $nb_points;
+        $this->nbPoints = $nbPoints;
 
         return $this;
     }
 
-    public function getClubId(): ?Club
+    public function getClub(): ?Club
     {
-        return $this->club_id;
+        return $this->club;
     }
 
-    public function setClubId(?Club $club_id): self
+    public function setClub(?Club $club): self
     {
-        $this->club_id = $club_id;
+        $this->club = $club;
 
         return $this;
     }

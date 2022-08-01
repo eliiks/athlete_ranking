@@ -33,23 +33,23 @@ class Club
     /**
      * @ORM\Column(type="string", length=45, unique=true)
      */
-    private ?string $admin_code = null;
+    private ?string $adminCode = null;
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="club_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="club", orphanRemoval=true)
      */
     private Collection $athletes;
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Administrator::class, mappedBy="club_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Administrator::class, mappedBy="club", orphanRemoval=true)
      */
     private Collection $administrators;
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="club_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="club", orphanRemoval=true)
      */
     private Collection $events;
 
@@ -91,12 +91,12 @@ class Club
 
     public function getAdminCode(): ?int
     {
-        return $this->admin_code;
+        return $this->adminCode;
     }
 
-    public function setAdminCode(int $admin_code): self
+    public function setAdminCode(int $adminCode): self
     {
-        $this->admin_code = $admin_code;
+        $this->adminCode = $adminCode;
 
         return $this;
     }
@@ -113,7 +113,7 @@ class Club
     {
         if (!$this->athletes->contains($athlete)) {
             $this->athletes->add($athlete);
-            $athlete->setClubId($this);
+            $athlete->setClub($this);
         }
 
         return $this;
@@ -123,8 +123,8 @@ class Club
     {
         if ($this->athletes->removeElement($athlete)) {
             // set the owning side to null (unless already changed)
-            if ($athlete->getClubId() === $this) {
-                $athlete->setClubId(null);
+            if ($athlete->getClub() === $this) {
+                $athlete->setClub(null);
             }
         }
 
@@ -143,7 +143,7 @@ class Club
     {
         if (!$this->administrators->contains($administrator)) {
             $this->administrators->add($administrator);
-            $administrator->setClubId($this);
+            $administrator->setClub($this);
         }
 
         return $this;
@@ -153,8 +153,8 @@ class Club
     {
         if ($this->administrators->removeElement($administrator)) {
             // set the owning side to null (unless already changed)
-            if ($administrator->getClubId() === $this) {
-                $administrator->setClubId(null);
+            if ($administrator->getClub() === $this) {
+                $administrator->setClub(null);
             }
         }
 
@@ -173,7 +173,7 @@ class Club
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
-            $event->setClubId($this);
+            $event->setClub($this);
         }
 
         return $this;
@@ -183,8 +183,8 @@ class Club
     {
         if ($this->events->removeElement($event)) {
             // set the owning side to null (unless already changed)
-            if ($event->getClubId() === $this) {
-                $event->setClubId(null);
+            if ($event->getClub() === $this) {
+                $event->setClub(null);
             }
         }
 

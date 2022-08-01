@@ -4,39 +4,48 @@ namespace App\Entity;
 
 use App\Repository\AdministratorRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="administrator")
  * @ORM\Entity(repositoryClass=AdministratorRepository::class)
  */
-class Administrator
+class Administrator implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column
      */
-    private ?int $id;
+    private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=45, unique=true)
      */
-    private ?string $login;
+    private ?string $login = null;
 
     /**
+     * @var string The hashed password
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $password;
+    private ?string $password = null;
 
     /**
      * @var Club
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="administrators")
      * @ORM\JoinColumn(
-     *     name="club_id",
+     *     name="club",
      *     nullable=false
      * )
      */
-    private ?Club $club_id;
+    private ?Club $club;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private ?array $roles = [];
+
 
     public function getId(): ?int
     {
@@ -55,7 +64,11 @@ class Administrator
         return $this;
     }
 
-    public function getPassword(): ?string
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -67,14 +80,71 @@ class Administrator
         return $this;
     }
 
-    public function getClubId(): ?Club
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
     {
-        return $this->club_id;
+        return null;
     }
 
-    public function setClubId(?Club $club_id): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->club_id = $club_id;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getClub(): ?Club
+    {
+        return $this->club;
+    }
+
+    public function setClub(?Club $club): self
+    {
+        $this->club = $club;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->login;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->login;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }

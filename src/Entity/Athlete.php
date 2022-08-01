@@ -21,12 +21,12 @@ class Athlete
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $first_name = null;
+    private ?string $firstName = null;
 
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $last_name = null;
+    private ?string $lastName = null;
 
     /**
      * @ORM\Column(type="integer")
@@ -37,21 +37,21 @@ class Athlete
      * @var Club|null
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="athletes")
      * @ORM\JoinColumn(
-     *     name="club_id",
+     *     name="club",
      *     nullable=false
      * )
      */
-    private ?Club $club_id = null;
+    private ?Club $club = null;
 
     /**
      * @var Category|null
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="athletes")
      * @ORM\JoinColumn(
-     *     name="categorie_id",
+     *     name="category",
      *     nullable=false
      * )
      */
-    private ?Category $categorie_id = null;
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -60,24 +60,24 @@ class Athlete
 
     public function getFirstName(): ?string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $first_name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    public function setLastName(?string $last_name): self
+    public function setLastName(?string $lastName): self
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -94,26 +94,26 @@ class Athlete
         return $this;
     }
 
-    public function getClubId(): ?Club
+    public function getClub(): ?Club
     {
-        return $this->club_id;
+        return $this->club;
     }
 
-    public function setClubId(?Club $club_id): self
+    public function setClub(?Club $club): self
     {
-        $this->club_id = $club_id;
+        $this->club = $club;
 
         return $this;
     }
 
-    public function getCategorieId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->categorie_id;
+        return $this->category;
     }
 
-    public function setCategorieId(?Category $categorie_id): self
+    public function setCategory(?Category $category): self
     {
-        $this->categorie_id = $categorie_id;
+        $this->category = $category;
 
         return $this;
     }

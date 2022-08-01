@@ -24,12 +24,12 @@ class Category
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private ?string $long_name = null;
+    private ?string $longName = null;
 
     /**
      * @ORM\Column(type="string", length=3)
      */
-    private ?string $short_name = null;
+    private ?string $shortName = null;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -38,7 +38,7 @@ class Category
 
     /**
      * @var Collection|ArrayCollection
-     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="categorie_id")
+     * @ORM\OneToMany(targetEntity=Athlete::class, mappedBy="category")
      */
     private Collection $athletes;
 
@@ -54,24 +54,24 @@ class Category
 
     public function getLongName(): ?string
     {
-        return $this->long_name;
+        return $this->longName;
     }
 
-    public function setLongName(string $long_name): self
+    public function setLongName(string $longName): self
     {
-        $this->long_name = $long_name;
+        $this->longName = $longName;
 
         return $this;
     }
 
     public function getShortName(): ?string
     {
-        return $this->short_name;
+        return $this->shortName;
     }
 
-    public function setShortName(string $short_name): self
+    public function setShortName(string $shortName): self
     {
-        $this->short_name = $short_name;
+        $this->shortName = $shortName;
 
         return $this;
     }
@@ -100,7 +100,7 @@ class Category
     {
         if (!$this->athletes->contains($athlete)) {
             $this->athletes->add($athlete);
-            $athlete->setCategorieId($this);
+            $athlete->setCategory($this);
         }
 
         return $this;
@@ -110,8 +110,8 @@ class Category
     {
         if ($this->athletes->removeElement($athlete)) {
             // set the owning side to null (unless already changed)
-            if ($athlete->getCategorieId() === $this) {
-                $athlete->setCategorieId(null);
+            if ($athlete->getCategory() === $this) {
+                $athlete->setCategory(null);
             }
         }
 
