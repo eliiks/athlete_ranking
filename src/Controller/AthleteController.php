@@ -67,10 +67,7 @@ class AthleteController extends AbstractController
     {
 
         $em = $doctrine->getManager();
-//        $athleteRep = $em->getRepository('App\Entity\Athlete');
-//
-//        $athleteFromClub = $athleteRep->findBy(array('club' => $clubId));
-//        dump($athleteFromClub);
+
 
         $catRep = $em->getRepository('App\Entity\Category');
         $allCats = $catRep->findAll();
@@ -84,18 +81,6 @@ class AthleteController extends AbstractController
 
 
 
-//    /**
-//     * @Route("/choixCategorie", name="_choixCategorie")
-//     */
-//    public function choixCategorieAction(): Response
-//    {
-//        if(isset($_POST["leclub"])) {
-//            return $this->render('athlete/recherche.html.twig', [
-//                'clubId'=> $_POST["leclub"]
-//            ]);
-//        }
-//    }
-
 
 
     // RESULTAT DE SELECT PAR CATEGORIE : 4
@@ -107,11 +92,16 @@ class AthleteController extends AbstractController
         if(isset($_POST["laCat"])) {
             $em = $doctrine->getManager();
             $athleteRep = $em->getRepository('App\Entity\Athlete');
-            $athletesCat = $athleteRep->findBy(array('club' => $clubId, 'category' => $_POST["laCat"]));
+            $athletesCat = $athleteRep->findBy(array('club' => $clubId, 'category' => $_POST["laCat"]), array('nb_points' => 'DESC'));
 
+//            $col = array_column( $athletesCat, "nb_points" );
+//            $athleteSort = array_multisort( $col, SORT_ASC, $athletesCat );
+
+            $lenomCat = $em->getRepository('App\Entity\Category');
+            $nomCat = $lenomCat->find($_POST["laCat"]);
 
             return $this->render('athlete/afficheCategorieAthlete.html.twig', [
-                'laCat'=> $_POST["laCat"],
+                'nomCat'=> $nomCat,
                 'athletesCat' => $athletesCat
             ]);
         }

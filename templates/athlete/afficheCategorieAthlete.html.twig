@@ -17,6 +17,21 @@
         }
     </style>
 
-    {{ dump(athletesCat) }}
+    <table>
+        <thead>
+        <tr>
+            <th colspan="2">Classement {{ nomCat.getLongName() }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for athlete in athletesCat %}
+        <tr>
+                <td> {{ athlete.getFirstName() }} </td>
+                <td> {{ athlete.getLastName() }} </td>
+                <td> {{ athlete.getNbPoints() }} </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
