@@ -94,8 +94,6 @@ class AthleteController extends AbstractController
             $athleteRep = $em->getRepository('App\Entity\Athlete');
             $athletesCat = $athleteRep->findBy(array('club' => $clubId, 'category' => $_POST["laCat"]), array('nb_points' => 'DESC'));
 
-//            $col = array_column( $athletesCat, "nb_points" );
-//            $athleteSort = array_multisort( $col, SORT_ASC, $athletesCat );
 
             $lenomCat = $em->getRepository('App\Entity\Category');
             $nomCat = $lenomCat->find($_POST["laCat"]);
