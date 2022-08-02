@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1> Ajouter un nouvel athlète</h1>
+
+    {{ form_start(ajouter_evenement_form) }}
+
+    <div id="nom">
+        {{ form_label(ajouter_evenement_form.name) }}
+        {{ form_widget(ajouter_evenement_form.name) }}
+        {{ form_errors(ajouter_evenement_form.name) }}
+    </div>
+    <br/>
+
+    <div id="points">
+        {{ form_label(ajouter_evenement_form.nbPoints) }}&nbsp;
+        {{ form_widget(ajouter_evenement_form.nbPoints) }}
+        {{ form_errors(ajouter_evenement_form.nbPoints) }}
+    </div>
+    <br/>
+
+    {{ form_row(ajouter_evenement_form.ajouter_evenement) }}
+    <br/>
+
+    {{ form_end(ajouter_evenement_form) }}
+{% endblock %}

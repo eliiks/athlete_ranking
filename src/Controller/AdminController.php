@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Administrator;
 use App\Entity\Athlete;
 use App\Form\AddAthleteType;
+use App\Form\AddEventType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -72,6 +73,16 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/admin/liste_athlete", name="admin_liste_athlete")
+     */
+    public function adminListeAthleteAction(ManagerRegistry $doctrine)
+    {
+        $athletes = $doctrine->getManager()->getRepository('App\Entity\Athlete')->findBy(array('club'=>$this->getUser()->getClub()));
+        $args = array('athletes' => $athletes);
+        return $this->render('admin/liste_athlete.html.twig', $args);
+    }
+
+    /**
      * @Route("/admin/ajouter_athlete", name="admin_ajouter_athlete")
      */
     public function adminAjouterAthleteAction(ManagerRegistry $doctrine, Request $request)
@@ -91,7 +102,7 @@ class AdminController extends AbstractController
             $em->persist($athlete);
             $em->flush();
 
-            return $this->redirectToRoute('admin_accueil');
+            return $this->redirectToRoute('admin_liste_athlete');
         }
 
         //formulaire recu mais invalide
@@ -104,16 +115,143 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ajouter_evenement", name="admin_ajouter_evenement")
+     * @Route("/admin/editer_athlete/{id}", name="admin_editer_athlete", requirements={"id" : "[0-9]+"})
      */
-    public function adminAjouterEvenementAction(ManagerRegistry $doctrine){
-        return $this->redirectToRoute("accueil");
+    public function adminEditerAthleteAction(int $id, ManagerRegistry $doctrine, Request $request)
+    {
+        $em = $doctrine->getManager();
+
+        $athlete = $em->getRepository('App\Entity\Athlete')->find($id);
+        if(isset($athlete)){
+            //Création du formulaire
+            $formulaire = $this->createForm(AddAthleteType::class, $athlete);
+            $formulaire->add('modifier_athlete', SubmitType::class, ['label' => 'Modifier l\'athlète']);
+            $formulaire->handleRequest($request); //permet de réafficher les données saisies dans le formulaire
+
+            //Si le formulaire a été recu et est valide
+            if($formulaire->isSubmitted() && $formulaire->isValid()){
+                $em->flush();
+
+                return $this->redirectToRoute('admin_liste_athlete');
+            }
+
+            //formulaire recu mais invalide
+            if($formulaire->isSubmitted()){
+                //message d'erreur
+            }
+
+            $args = array('modifier_athlete_form' => $formulaire->createView(), 'athlete' => $athlete);
+            return $this->render('admin/editer_athlete.html.twig', $args);
+        }else{
+            return $this->redirectToRoute('admin_liste_athlete');
+        }
+    }
+
+    /**
+     * @Route("/admin/supprimer_athlete/{id}", name="admin_supprimer_athlete", requirements={"id" : "[0-9]+"})
+     */
+    public function adminSupprimerAthleteAction(int $id, ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+
+        $athlete = $em->getRepository('App\Entity\Athlete')->find($id);
+        if(isset($athlete)){
+
+            $em->remove($athlete);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_liste_athlete');
     }
 
     /**
      * @Route("/admin/liste_evenement", name="admin_liste_evenement")
      */
-    public function adminListeEvenementAction(ManagerRegistry $doctrine){
-        return $this->redirectToRoute("accueil");
+    public function adminListeEvenementAction(ManagerRegistry $doctrine)
+    {
+        $events = $doctrine->getManager()->getRepository('App\Entity\Event')->findBy(array('club'=>$this->getUser()->getClub()));
+        $args = array('events' => $events);
+        return $this->render('admin/liste_evenement.html.twig', $args);
+    }
+
+    /**
+     * @Route("/admin/ajouter_evenement", name="admin_ajouter_evenement")
+     */
+    public function adminAjouterEvenementAction(ManagerRegistry $doctrine, Request $request){
+        //Création du formulaire
+        $formulaire = $this->createForm(AddEventType::class);
+        $formulaire->add('ajouter_evenement', SubmitType::class, ['label' => 'Ajouter l\'événement']);
+        $formulaire->handleRequest($request); //permet de réafficher les données saisies dans le formulaire
+
+        //Si le formulaire a été recu et est valide
+        if($formulaire->isSubmitted() && $formulaire->isValid()){
+            $em = $doctrine->getManager();
+
+            $event = $formulaire->getData();
+            $event->setClub($this->getUser()->getClub());
+
+            $em->persist($event);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_liste_evenement');
+        }
+
+        //formulaire recu mais invalide
+        if($formulaire->isSubmitted()){
+            //message d'erreur
+        }
+
+        $args = array('ajouter_evenement_form' => $formulaire->createView());
+        return $this->render('admin/ajouter_evenement.html.twig', $args);
+    }
+
+    /**
+     * @Route("/admin/editer_evenement/{id}", name="admin_editer_evenement", requirements={"id" : "[0-9]+"})
+     */
+    public function adminEditerEvenementAction(int $id, ManagerRegistry $doctrine, Request $request)
+    {
+        $em = $doctrine->getManager();
+
+        $event = $em->getRepository('App\Entity\Event')->find($id);
+        if(isset($event)){
+            //Création du formulaire
+            $formulaire = $this->createForm(AddEventType::class, $event);
+            $formulaire->add('modifier_evenement', SubmitType::class, ['label' => 'Modifier l\'evenement']);
+            $formulaire->handleRequest($request); //permet de réafficher les données saisies dans le formulaire
+
+            //Si le formulaire a été recu et est valide
+            if($formulaire->isSubmitted() && $formulaire->isValid()){
+                $em->flush();
+
+                return $this->redirectToRoute('admin_liste_evenement');
+            }
+
+            //formulaire recu mais invalide
+            if($formulaire->isSubmitted()){
+                //message d'erreur
+            }
+
+            $args = array('modifier_evenement_form' => $formulaire->createView(), 'event' => $event);
+            return $this->render('admin/editer_evenement.html.twig', $args);
+        }else{
+            return $this->redirectToRoute('admin_liste_evenement');
+        }
+    }
+
+    /**
+     * @Route("/admin/supprimer_evenement/{id}", name="admin_supprimer_evenement", requirements={"id" : "[0-9]+"})
+     */
+    public function adminSupprimerEventAction(int $id, ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+
+        $event = $em->getRepository('App\Entity\Event')->find($id);
+        if(isset($event)){
+
+            $em->remove($event);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_liste_evenement');
     }
 }

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1> Modifier un nouvel athlète</h1>
+
+    {{ form_start(modifier_athlete_form) }}
+
+    <div id="prenom">
+        {{ form_label(modifier_athlete_form.firstName) }}
+        {{ form_widget(modifier_athlete_form.firstName) }}
+        {{ form_errors(modifier_athlete_form.firstName) }}
+    </div>
+    <br/>
+
+    <div id="nom">
+        {{ form_label(modifier_athlete_form.lastName) }}&nbsp;
+        {{ form_widget(modifier_athlete_form.lastName) }}
+        {{ form_errors(modifier_athlete_form.lastName) }}
+    </div>
+    <br/>
+
+    <div id="categorie">
+        {{ form_label(modifier_athlete_form.category) }}&nbsp;
+        {{ form_widget(modifier_athlete_form.category) }}
+        {{ form_errors(modifier_athlete_form.category) }}
+    </div>
+    <br/>
+
+    {{ form_row(modifier_athlete_form.modifier_athlete) }}
+    <br/>
+
+    {{ form_end(modifier_athlete_form) }}
+
+    <a href="{{ path('admin_supprimer_athlete', {"id": athlete.id}) }}">Supprimer l'athlète</a>
+{% endblock %}

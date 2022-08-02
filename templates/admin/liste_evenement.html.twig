@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1> Liste des evenements du club {{ app.user.club.name }} </h1>
+
+    <a href="{{ path("admin_ajouter_evenement") }}">Ajouter un evenement</a>
+    <br/><br/>
+    <table>
+        <thead>
+        <th> N° </th>
+        <th> Nom </th>
+        <th> Nombre de points </th>
+        <th> </th>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ event.name | upper }}</td>
+                <td>{{ event.nbPoints | capitalize}}</td>
+                <td><a href="{{ path("admin_editer_evenement", {"id": event.id}) }}">Editer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -23,7 +23,7 @@ class Athlete
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(max=50)
      * @Assert\Regex(
-     *     "/([A-ZÀ-ÿ][-a-z ']+[ ]*)+/"
+     *     "/^([a-zA-ZÀ-ÿ][-a-zA-ZÀ-ÿ ]+[ ]*)+$/"
      * )
      */
     private ?string $firstName = null;
@@ -32,13 +32,16 @@ class Athlete
      * @ORM\Column(type="string", length=45)
      * @Assert\Length(max=50)
      * @Assert\Regex(
-     *     "/([A-ZÀ-ÿ][-a-z ']+[ ]*)+/"
+     *     "/^([a-zA-ZÀ-ÿ][-a-zA-ZÀ-ÿ ]+[ ]*)+$/"
      * )
      */
     private ?string $lastName = null;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0, minMessage = "L'événement ne peut rapporter un nombre négatif de points"
+     * )
      */
     private ?int $nb_points = 0;
 
@@ -125,5 +128,9 @@ class Athlete
         $this->category = $category;
 
         return $this;
+    }
+
+    public function getParticipation(){
+        $this->
     }
 }
