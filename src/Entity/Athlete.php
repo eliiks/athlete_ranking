@@ -129,8 +129,4 @@ class Athlete
 
         return $this;
     }
-
-    public function getParticipation(){
-        $this->
-    }
 }
