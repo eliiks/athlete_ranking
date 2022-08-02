@@ -12,15 +12,31 @@
         }
     </style>
 
-
-    <div class="example-wrapper">
+    <span>
+        <div class="example-wrapper">
         <a href={{ path("connexion") }}>
-            Se connecter en tant qu'Administrateur
+            <button class="glow-on-hover" type="button">
+                Je suis un Administrateur
+            </button>
         </a>
     </div>
+        <br/>
     <div class="example-wrapper">
         <a href={{ path("athlete_listeClub") }}>
-            Se connecter en tant qu'Athlete
+            <button class="glow-on-hover" type="button">
+            Je suis un Athlete
+            </button>
         </a>
     </div>
+         </span>
+
+
+
+    {#    {% block javascripts %} #}
+    {#        <script src="//code.jquery.com/jquery-2.1.4.min.js"></script> #}
+    {#        <script src=" {{ asset('js/main.js') }}"></script> #}
+    {#        {% endblock %} #}
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
