@@ -3,47 +3,43 @@
 {% block title %}Hello AthleteController!{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
 
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-
-    <table>
-        <thead>
-        <tr>
-            <th colspan="2">Profil Athlete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td> Classement </td>
-            <td> Prénom </td>
-            <td> Nom </td>
-            <td> Points </td>
-        </tr>
-
-        <tr>
-            <td> {{ position }} </td>
-            <td> {{ athleteRecherche[0].getFirstName() }} </td>
-            <td> {{ athleteRecherche[0].getLastName() }} </td>
-            <td> {{ athleteRecherche[0].getNbPoints() }} </td>
-        </tr>
-        </tbody>
-    </table>
+    <h1 class="titre">Profil Athlète </h1>
 
 
 
 
+    <div class="table-wrapper">
 
+        <table class="fl-table">
+            <tbody>
+            <thead>
+                <tr>
+                    <th> Classement</th>
+                    <th> Prénom</th>
+                    <th> Nom</th>
+                    <th> Points</th>
+                    <th> Categorie</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td> {{ position }} </td>
+                <td> {{ athleteRecherche[0].getFirstName() }} </td>
+                <td> {{ athleteRecherche[0].getLastName() }} </td>
+                <td> {{ athleteRecherche[0].getNbPoints() }} </td>
+                <td> {{ athleteRecherche[0].getCategory().getLongName() }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 
 {% endblock %}

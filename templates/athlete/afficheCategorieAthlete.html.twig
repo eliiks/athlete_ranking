@@ -3,33 +3,22 @@
 {% block title %}Hello AthleteController!{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
 
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
+    <h1 class="titre">Classement {{ nomCat.getLongName() }} </h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th colspan="2">Classement {{ nomCat.getLongName() }}</th>
-        </tr>
-        </thead>
+    <div class="table-wrapper">
+
+    <table class="fl-table">
         <tbody>
-        <tr>
-            <td> Classement </td>
-            <td> Prénom </td>
-            <td> Nom </td>
-            <td> Points </td>
-        </tr>
+        <thead>
+            <tr>
+                <th> Classement </th>
+                <th> Prénom </th>
+                <th> Nom </th>
+                <th> Points </th>
+            </tr>
+        </thead>
+
         {% set i = 1 %}
         {% for athlete in athletesCat %}
         <tr>
@@ -40,7 +29,15 @@
                 {% set i = i + 1 %}
         </tr>
         {% endfor %}
+
         </tbody>
     </table>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
 
 {% endblock %}
