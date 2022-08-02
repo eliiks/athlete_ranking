@@ -20,13 +20,20 @@ class Athlete
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=45)
-     * @Assert\Length(min=2, max=45)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\Length(max=50)
+     * @Assert\Regex(
+     *     "/([A-ZÀ-ÿ][-a-z ']+[ ]*)+/"
+     * )
      */
     private ?string $firstName = null;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Length(max=50)
+     * @Assert\Regex(
+     *     "/([A-ZÀ-ÿ][-a-z ']+[ ]*)+/"
+     * )
      */
     private ?string $lastName = null;
 

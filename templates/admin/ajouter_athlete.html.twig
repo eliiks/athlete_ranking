@@ -4,28 +4,32 @@
 
 {% block body %}
     <h1> Ajouter un nouvel athlète</h1>
-    <form method="post" action="{{ path("admin_ajouter_athlete") }}">
-        <div>
-            <label for="first_name"> Prénom </label>
-            <input type="text" name="first_name" required/>
-        </div>
-        <br/>
-        <div>
-            <label for="last_name"> Nom </label>
-            <input type="text" name="last_name" required/>
-        </div>
-        <br/>
-        <div>
-            <label for="category"> Catégorie </label>
-            <select name="category">
-                {% for category in categories %}
-                    <option value="{{category.id}}"> {{ category.longName }} ({{ category.shortName }})</option>
-                {% endfor %}
-            </select>
-        </div>
-        <br/>
 
+    {{ form_start(ajouter_athlete_form) }}
 
-        <button type="submit"> Confirmer </button>
-    </form>
+    <div id="prenom">
+        {{ form_label(ajouter_athlete_form.firstName) }}
+        {{ form_widget(ajouter_athlete_form.firstName) }}
+        {{ form_errors(ajouter_athlete_form.firstName) }}
+    </div>
+    <br/>
+
+    <div id="nom">
+        {{ form_label(ajouter_athlete_form.lastName) }}&nbsp;
+        {{ form_widget(ajouter_athlete_form.lastName) }}
+        {{ form_errors(ajouter_athlete_form.lastName) }}
+    </div>
+    <br/>
+
+    <div id="categorie">
+        {{ form_label(ajouter_athlete_form.category) }}&nbsp;
+        {{ form_widget(ajouter_athlete_form.category) }}
+        {{ form_errors(ajouter_athlete_form.category) }}
+    </div>
+    <br/>
+
+    {{ form_row(ajouter_athlete_form.ajouter_athlete) }}
+    <br/>
+
+    {{ form_end(ajouter_athlete_form) }}
 {% endblock %}

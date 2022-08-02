@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Administrator;
 use App\Entity\Athlete;
+use App\Form\AddAthleteType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -71,30 +74,33 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/ajouter_athlete", name="admin_ajouter_athlete")
      */
-    public function adminAjouterAthleteAction(ManagerRegistry $doctrine, ValidatorInterface $validator)
+    public function adminAjouterAthleteAction(ManagerRegistry $doctrine, Request $request)
     {
-        if($this->getUser()){
-            $categories = $doctrine->getManager()->getRepository('App\Entity\Category')->findAll();
+        //Création du formulaire
+        $formulaire = $this->createForm(AddAthleteType::class);
+        $formulaire->add('ajouter_athlete', SubmitType::class, ['label' => 'Ajouter l\'athlète']);
+        $formulaire->handleRequest($request); //permet de réafficher les données saisies dans le formulaire
 
-            if (isset($_POST['first_name'])) {
-                //Category selected
-                dump($categories);
-                $categorySelected = $categories[$_POST['category']-$_POST['category']+1];
+        //Si le formulaire a été recu et est valide
+        if($formulaire->isSubmitted() && $formulaire->isValid()){
+            $em = $doctrine->getManager();
 
+            $athlete = $formulaire->getData();
+            $athlete->setClub($this->getUser()->getClub());
 
+            $em->persist($athlete);
+            $em->flush();
 
-                $athlete = new Athlete();
-                $athlete->setFirstName($_POST['first_name']);
-                $athlete->setLastName($_POST['last_name']);
-                $athlete->setClub($this->getUser()->getClub());
-                $athlete->setCategory($categorySelected);
-
-                dump(empty($validator->validate($athlete)[0]));
-            }
-            return $this->render("admin/ajouter_athlete.html.twig", ["categories" => $categories]);
-        }else{
-            return $this->redirectToRoute('accueil');
+            return $this->redirectToRoute('admin_accueil');
         }
+
+        //formulaire recu mais invalide
+        if($formulaire->isSubmitted()){
+            //message d'erreur
+        }
+
+        $args = array('ajouter_athlete_form' => $formulaire->createView());
+        return $this->render('admin/ajouter_athlete.html.twig', $args);
     }
 
     /**
