@@ -23,14 +23,14 @@
     <br/>
 </div>
 
-<div class="marginTop">
-    <h1 class="smalltexte"> Selectionner la catégorie </h1>
-    <div id="categorie">
-        {{ form_widget(modifier_athlete_form.category, {'attr': {'class': 'select'}}) }}
-        {{ form_errors(modifier_athlete_form.category) }}
+    <div class="marginTop">
+        <h1 class="smalltexte"> Selectionner la catégorie </h1>
+        <div id="categorie">
+            {{ form_widget(modifier_athlete_form.category, {'attr': {'class': 'select'}}) }}
+            {{ form_errors(modifier_athlete_form.category) }}
+        </div>
+        <br/>
     </div>
-    <br/>
-</div>
 
     <div class="marginTop">
         {{ form_row(modifier_athlete_form.modifier_athlete, {'attr': {'class': 'glow-on-hover smallButton'}}) }}

@@ -5,7 +5,10 @@
 {% block body %}
     <h1> Associer {{ athlete.firstName }} {{ athlete.lastName }} à un événement </h1>
 
-    <form>
-        <
+    <form method="post" action="{{ path("admin_associer_evenement", {"id": athlete.id}) }}">
+        {% for event in events %}
+            <input type="checkbox" name="evenements[]" value="{{ event.object.id }}" {{ event.checked }}/> {{ event.object.name }} <br/>
+        {% endfor %}
+        <input type="submit" value="Submit" name="submit">
     </form>
 {% endblock %}

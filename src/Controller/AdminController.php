@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Administrator;
 use App\Entity\Athlete;
+use App\Entity\Participation;
 use App\Form\AddAthleteType;
 use App\Form\AddEventType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -253,5 +254,142 @@ class AdminController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_liste_evenement');
+    }
+
+    /**
+     * Associer des événements à un athlete avec son id
+     * @Route("/admin/associer_evenement/{id}", name="admin_associer_evenement",
+     * requirements={"id":"[0-9]+"})
+     */
+    public function adminAssocierEvenementAction(int $id, ManagerRegistry $doctrine, Request $request){
+        $em = $doctrine->getManager();
+        $athlete = $em->getRepository('App\Entity\Athlete')->find($id);
+
+        if(isset($athlete) && $athlete->getClub() === $this->getUser()->getClub()){
+            $participations = $em->getRepository('App\Entity\Participation')->findBy(array(
+                "athlete" => $athlete
+            ));
+            $events = $em->getRepository('App\Entity\Event')->findBy(array("club" => $this->getUser()->getClub()));
+
+            $participed_events = [];
+            foreach($participations as $key=>$value){
+                $participed_events[$key] = $value->getEvent();
+            }
+
+            $events_list = [];
+            foreach($events as $key=>$value){
+                if(in_array($value, $participed_events)){
+                    $events_list[$key]['object'] = $value;
+                    $events_list[$key]['checked'] = 'checked';
+                }else{
+                    $events_list[$key]['object'] = $value;
+                    $events_list[$key]['checked'] = '';
+                }
+            }
+
+            if(isset($_POST['submit'])){
+                if(isset($_POST['evenements'])){
+                    $selected_events = $em->getRepository('App\Entity\Event')->findBy(array('id' => $_POST['evenements']));
+                }else{
+                    $selected_events = [];
+                }
+
+
+                foreach($events as $key=>$value){
+                    //Cas 1 : event précédemment dans participation mais pas selectionne dans le formulaire => delete
+                    dump(in_array($value, $participed_events));
+                    dump(!in_array($value, $selected_events));
+                    if(in_array($value, $participed_events) && !in_array($value, $selected_events)){
+                        $em->remove($em->getRepository('App\Entity\Participation')->findOneBy(array('event' => $value)));
+                        $athlete->setNbPoints($athlete->getNbPoints() - $value->getNbPoints());
+                    }
+
+                    //Cas 2 : event non dans participation mais selectionne dans le formulaire => add
+                    if(!in_array($value, $participed_events) && in_array($value, $selected_events)){
+                        $participation = new Participation();
+                        $participation->setAthlete($athlete);
+                        $participation->setEvent($value);
+
+                        $athlete->setNbPoints($athlete->getNbPoints() + $value->getNbPoints());
+
+                        $em->persist($participation);
+                    }
+                    //sinon : on garde
+                }
+                $em->flush();
+                return $this->redirectToRoute('admin_liste_athlete');
+            }
+            return $this->render('admin/associer_evenement.html.twig', ["athlete" => $athlete, "events" => $events_list]);
+        }else{
+            return $this->redirectToRoute('admin_liste_athlete');
+        }
+    }
+
+    /**
+     * Associer des athletes à un evenement avec son id
+     * @Route("/admin/associer_athlete/{id}", name="admin_associer_athlete",
+     * requirements={"id":"[0-9]+"})
+     */
+    public function adminAssocierAthleteAction(int $id, ManagerRegistry $doctrine){
+        $em = $doctrine->getManager();
+        $event = $em->getRepository('App\Entity\Event')->find($id);
+
+        if(isset($event) && $event->getClub() === $this->getUser()->getClub()){
+            $participations = $em->getRepository('App\Entity\Participation')->findBy(array(
+                "event" => $event
+            ));
+            $athletes = $em->getRepository('App\Entity\Athlete')->findBy(array("club" => $this->getUser()->getClub()));
+
+            $participed_athletes = [];
+            foreach($participations as $key=>$value){
+                $participed_athletes[$key] = $value->getAthlete();
+            }
+
+            $athletes_list = [];
+            foreach($athletes as $key=>$value){
+                if(in_array($value, $participed_athletes)){
+                    $athletes_list[$key]['object'] = $value;
+                    $athletes_list[$key]['checked'] = 'checked';
+                }else{
+                    $athletes_list[$key]['object'] = $value;
+                    $athletes_list[$key]['checked'] = '';
+                }
+            }
+
+            if(isset($_POST['submit'])){
+                if(isset($_POST['athletes'])){
+                    $selected_athletes = $em->getRepository('App\Entity\Athlete')->findBy(array('id' => $_POST['athletes']));
+                }else{
+                    $selected_athletes = [];
+                }
+
+
+                foreach($athletes as $key=>$value){
+                    //Cas 1 : event précédemment dans participation mais pas selectionne dans le formulaire => delete
+
+                    if(in_array($value, $participed_athletes) && !in_array($value, $selected_athletes)){
+                        $em->remove($em->getRepository('App\Entity\Participation')->findOneBy(array('athlete' => $value)));
+                        $value->setNbPoints($value->getNbPoints() - $event->getNbPoints());
+                    }
+
+                    //Cas 2 : event non dans participation mais selectionne dans le formulaire => add
+                    if(!in_array($value, $participed_athletes) && in_array($value, $selected_athletes)){
+                        $participation = new Participation();
+                        $participation->setAthlete($value);
+                        $participation->setEvent($event);
+
+                        $value->setNbPoints($value->getNbPoints() + $event->getNbPoints());
+
+                        $em->persist($participation);
+                    }
+                    //sinon : on garde
+                }
+                $em->flush();
+                return $this->redirectToRoute('admin_liste_evenement');
+            }
+            return $this->render('admin/associer_athlete.html.twig', ["evenement" => $event, "athletes" => $athletes_list]);
+        }else{
+            return $this->redirectToRoute('admin_liste_evenement');
+        }
     }
 }

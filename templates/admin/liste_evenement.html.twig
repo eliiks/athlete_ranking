@@ -17,6 +17,7 @@
             <th> Nom</th>
             <th> Nombre de points</th>
             <th> Editer un événement</th>
+            <th>  Associer des athlètes </th>
             </thead>
             <tbody>
             {% for event in events %}
@@ -28,6 +29,15 @@
                         <a href="{{ path("admin_editer_evenement", {"id": event.id}) }}">
                             <button class="reallySmallButton glow-on-hover">
                                 Editer
+                            </button>
+                        </a>
+
+                    </td>
+                    <td>
+
+                        <a href="{{ path("admin_associer_athlete", {"id": event.id}) }}">
+                            <button class="reallySmallButton glow-on-hover">
+                                Associer
                             </button>
                         </a>
 
