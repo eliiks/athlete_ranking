@@ -16,8 +16,8 @@
             <thead>
                 <tr>
                     <th> Classement</th>
-                    <th> Prénom</th>
                     <th> Nom</th>
+                    <th> Prénom</th>
                     <th> Points</th>
                     <th> Categorie</th>
                 </tr>
@@ -25,8 +25,8 @@
 
             <tr>
                 <td> {{ position }} </td>
-                <td> {{ athleteRecherche[0].getFirstName() }} </td>
-                <td> {{ athleteRecherche[0].getLastName() }} </td>
+                <td> {{ athleteRecherche[0].getLastName() | upper}} </td>
+                <td> {{ athleteRecherche[0].getFirstName() | capitalize}} </td>
                 <td> {{ athleteRecherche[0].getNbPoints() }} </td>
                 <td> {{ athleteRecherche[0].getCategory().getLongName() }}</td>
             </tr>

@@ -3,33 +3,50 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Ajouter un nouvel athlète</h1>
+    <h1 class="texte"> Ajouter un nouvel athlète</h1>
 
     {{ form_start(ajouter_athlete_form) }}
-
-    <div id="prenom">
-        {{ form_label(ajouter_athlete_form.firstName) }}
-        {{ form_widget(ajouter_athlete_form.firstName) }}
-        {{ form_errors(ajouter_athlete_form.firstName) }}
+    <div class="marginTop">
+        <div class="webflow-style-input" id="prenom">
+            {{ form_label(ajouter_athlete_form.firstName, 'Prenoms') }}
+            {{ form_widget(ajouter_athlete_form.firstName) }}
+            {{ form_errors(ajouter_athlete_form.firstName) }}
+        </div>
     </div>
+
     <br/>
 
-    <div id="nom">
+    <div class="webflow-style-input" id="nom">
         {{ form_label(ajouter_athlete_form.lastName) }}&nbsp;
         {{ form_widget(ajouter_athlete_form.lastName) }}
         {{ form_errors(ajouter_athlete_form.lastName) }}
     </div>
     <br/>
 
-    <div id="categorie">
-        {{ form_label(ajouter_athlete_form.category) }}&nbsp;
-        {{ form_widget(ajouter_athlete_form.category) }}
-        {{ form_errors(ajouter_athlete_form.category) }}
+    <div class="marginTop">
+        <div id="categorie">
+            {{ form_label(ajouter_athlete_form.category) }}&nbsp;
+            {{ form_widget(ajouter_athlete_form.category, {'attr': {'class': 'select'}}) }}
+            {{ form_errors(ajouter_athlete_form.category) }}
+        </div>
+        <br/>
     </div>
-    <br/>
 
-    {{ form_row(ajouter_athlete_form.ajouter_athlete) }}
-    <br/>
+    <div class="marginTop2">
+        {{ form_row(ajouter_athlete_form.ajouter_athlete, {'attr': {'class': 'glow-on-hover smallButton'}}) }}
+        <br/>
+    </div>
+
 
     {{ form_end(ajouter_athlete_form) }}
 {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/input.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/scrolldown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+
+
+{% endblock %}
+

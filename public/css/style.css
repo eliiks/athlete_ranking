@@ -26,7 +26,17 @@ body {
     color: #f0ffff;
 }
 
+.smallButton {
+    font-size: 1vw;
+    width: 10vw;
+    height: 2vw;
+}
 
+.reallySmallButton {
+    font-size: 0.8vw;
+    width: 7vw;
+    height: 1.5vw;
+}
 
 
 

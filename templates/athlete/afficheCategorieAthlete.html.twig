@@ -13,8 +13,8 @@
         <thead>
             <tr>
                 <th> Classement </th>
-                <th> Prénom </th>
                 <th> Nom </th>
+                <th> Prénom </th>
                 <th> Points </th>
             </tr>
         </thead>
@@ -23,8 +23,8 @@
         {% for athlete in athletesCat %}
         <tr>
                 <td> {{ i }} </td>
-                <td> {{ athlete.getFirstName() }} </td>
-                <td> {{ athlete.getLastName() }} </td>
+                <td> {{ athlete.getLastName() | upper}} </td>
+                <td> {{ athlete.getFirstName() | capitalize}} </td>
                 <td> {{ athlete.getNbPoints() }} </td>
                 {% set i = i + 1 %}
         </tr>

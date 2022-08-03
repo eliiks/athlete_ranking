@@ -3,30 +3,53 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Liste des athletes du club {{ app.user.club.name }} </h1>
+    <h1 class="texte"> Liste des athletes du club {{ app.user.club.name }} </h1>
 
-    <a href="{{ path("admin_ajouter_athlete") }}">Ajouter un athlete</a>
-    <br/><br/>
-    <table>
-        <thead>
-            <th> N° </th>
-            <th> Nom </th>
-            <th> Prénom </th>
-            <th> Catégorie </th>
-            <th> Nombre de points </th>
-            <th> </th>
-        </thead>
-        <tbody>
+
+
+    <a href="{{ path("admin_ajouter_athlete") }}">
+        <button class="smallButton glow-on-hover">
+            Ajouter un athlete
+        </button>
+    </a>
+
+
+
+    <div class="table-wrapper">
+
+        <table class="fl-table">
+            <thead>
+            <th> Nom</th>
+            <th> Prénom</th>
+            <th> Catégorie</th>
+            <th> Nombre de points</th>
+            <th> Editer un athlète </th>
+            </thead>
+            <tbody>
             {% for athlete in athletes %}
                 <tr>
-                    <td>{{ loop.index }}</td>
                     <td>{{ athlete.lastName | upper }}</td>
-                    <td>{{ athlete.firstName | capitalize}}</td>
+                    <td>{{ athlete.firstName | capitalize }}</td>
                     <td>{{ athlete.category.longName }} ({{ athlete.category.shortName }})</td>
                     <td>{{ athlete.nbPoints }}</td>
-                    <td><a href="{{ path("admin_editer_athlete", {"id": athlete.id}) }}">Editer</a></td>
+                    <td>
+                        <a href="{{ path("admin_editer_athlete", {"id": athlete.id}) }}">
+                            <button class="reallySmallButton glow-on-hover">
+                                Editer
+                            </button>
+                        </a>
+
+                    </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+
 {% endblock %}
