@@ -3,8 +3,32 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> {{ club.name }} </h1>
+    <h1 class="titre"> {{ club.name }} </h1>
 
-    <a href="{{ path("admin_liste_athlete") }}"> Les athlètes </a><br/><br/>
-    <a href="{{ path("admin_liste_evenement") }}"> Les événements </a><br/><br/>
+
+    <div class="marginTop2">
+        <a href="{{ path("admin_liste_athlete") }}">
+            <button class="buttonAccueil glow-on-hover">
+                Les athlètes
+            </button>
+        </a>
+    </div>
+
+    <div class="marginTop2">
+        <a href="{{ path("admin_liste_evenement") }}">
+            <button class="buttonAccueil glow-on-hover">
+                Les événements
+            </button>
+        </a>
+    </div>
+
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 {% endblock %}
