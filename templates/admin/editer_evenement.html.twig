@@ -3,28 +3,51 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Modifier un nouvel athlète</h1>
+    <h1 class="texte"> Modifier un événement</h1>
 
     {{ form_start(modifier_evenement_form) }}
 
-    <div id="nom">
-        {{ form_label(modifier_evenement_form.name) }}
-        {{ form_widget(modifier_evenement_form.name) }}
+<div class="marginTop">
+    <div class="webflow-style-input" id="event">
+        {{ form_widget(modifier_evenement_form.name, {'attr': {'placeholder': 'Nom de l\'événement'}}) }}
         {{ form_errors(modifier_evenement_form.name) }}
     </div>
     <br/>
+</div>
 
-    <div id="nbPoints">
-        {{ form_label(modifier_evenement_form.nbPoints) }}&nbsp;
-        {{ form_widget(modifier_evenement_form.nbPoints) }}
+
+    <div id="points">
+        <div class="webflow-style-input" id="points">
+        {{ form_widget(modifier_evenement_form.nbPoints, {'attr': {'placeholder': 'Nombre de points de l événement'}}) }}
         {{ form_errors(modifier_evenement_form.nbPoints) }}
+        </div>
     </div>
     <br/>
 
-    {{ form_row(modifier_evenement_form.modifier_evenement) }}
+    <div class="marginTop">
+        {{ form_row(modifier_evenement_form.modifier_evenement, {'attr': {'class': 'glow-on-hover buttonSizeStandard'}}) }}
+    </div>
     <br/>
 
     {{ form_end(modifier_evenement_form) }}
 
-    <a href="{{ path('admin_supprimer_evenement', {"id": event.id}) }}">Supprimer l'evenement</a>
+
+    <div class="marginTop">
+        <a href="{{ path('admin_supprimer_evenement', {"id": event.id}) }}">
+            <button class="buttonSizeStandard glow-on-hover">
+                Supprimer l'evenement
+            </button>
+        </a>
+    </div>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/input.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/scrolldown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+
+
 {% endblock %}
