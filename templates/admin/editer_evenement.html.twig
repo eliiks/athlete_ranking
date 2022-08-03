@@ -28,18 +28,16 @@
         {{ form_row(modifier_evenement_form.modifier_evenement, {'attr': {'class': 'glow-on-hover buttonSizeStandard'}}) }}
     </div>
     <br/>
-
     {{ form_end(modifier_evenement_form) }}
 
+    <form method="post" action="{{ path('admin_supprimer_evenement', {"id": event.id}) }}">
+        <div class="marginTop">
+            <input class="buttonSizeStandard glow-on-hover" type="submit" name="supprimer" value="Supprimer l'evenement" onclick="ask()"/>
+        </div>
+    </form>
 
-    <div class="marginTop">
-        <a href="{{ path('admin_supprimer_evenement', {"id": event.id}) }}" onclick="ask()">
-            <button class="buttonSizeStandard glow-on-hover">
-                Supprimer l'evenement
-            </button>
-        </a>
-    </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="{{ asset('javascript/script.js') }}"></script>
 {% endblock %}
 
 

@@ -211,6 +211,7 @@ class AdminController extends AbstractController
      */
     public function adminEditerEvenementAction(int $id, ManagerRegistry $doctrine, Request $request)
     {
+        dump($_POST);
         $em = $doctrine->getManager();
 
         $event = $em->getRepository('App\Entity\Event')->find($id);
@@ -232,7 +233,9 @@ class AdminController extends AbstractController
                 //message d'erreur
             }
 
-            $args = array('modifier_evenement_form' => $formulaire->createView(), 'event' => $event);
+            $args = array(
+                'modifier_evenement_form' => $formulaire->createView(),
+                'event' => $event);
             return $this->render('admin/editer_evenement.html.twig', $args);
         }else{
             return $this->redirectToRoute('admin_liste_evenement');
@@ -240,14 +243,29 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/supprimer_evenement/{id}", name="admin_supprimer_evenement", requirements={"id" : "[0-9]+"})
+     * @Route("/admin/supprimer_evenement/{id}/{del}",
+     *     name="admin_supprimer_evenement",
+     *     defaults = {"del":"false"},
+     *     requirements={
+     *          "id" : "[0-9]+",
+     *          "del" : "false|true"
+     *     }
+     * )
      */
-    public function adminSupprimerEventAction(int $id, ManagerRegistry $doctrine)
+    public function adminSupprimerEventAction(int $id, ManagerRegistry $doctrine, bool $del)
     {
         $em = $doctrine->getManager();
-
         $event = $em->getRepository('App\Entity\Event')->find($id);
+
         if(isset($event)){
+            if($del){
+                $participation = $em->getRepository('App\Entity\Participation')->findBy(array('event'=>$event));
+
+                foreach($participation as $key=>$value){
+                    $value->getAthlete()->setNbPoints($value->getAthlete()->getNbPoints() - $event->getNbPoints());
+                    $em->remove($value);
+                }
+            }
 
             $em->remove($event);
             $em->flush();
