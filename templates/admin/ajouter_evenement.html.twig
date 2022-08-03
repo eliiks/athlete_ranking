@@ -3,26 +3,44 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Ajouter un nouvel athlète</h1>
+
 
     {{ form_start(ajouter_evenement_form) }}
 
-    <div id="nom">
-        {{ form_label(ajouter_evenement_form.name) }}
-        {{ form_widget(ajouter_evenement_form.name) }}
-        {{ form_errors(ajouter_evenement_form.name) }}
-    </div>
-    <br/>
+     <div class="marginTop">
+         <h1 class="texte"> Ajouter un nouvel événement</h1>
+            <div class="marginTop">
+                <div class="webflow-style-input" id="event">
+                    {{ form_widget(ajouter_evenement_form.name, {'attr': {'placeholder': 'Nom de l\'événement'}}) }}
+                    {{ form_errors(ajouter_evenement_form.name) }}
+                </div>
+            </div>
+
+        <br/>
+     </div>
 
     <div id="points">
-        {{ form_label(ajouter_evenement_form.nbPoints) }}&nbsp;
-        {{ form_widget(ajouter_evenement_form.nbPoints) }}
-        {{ form_errors(ajouter_evenement_form.nbPoints) }}
+        <div class="webflow-style-input" id="points">
+            {{ form_widget(ajouter_evenement_form.nbPoints, {'attr': {'placeholder': 'Nombre de points de l événement'}}) }}
+            {{ form_errors(ajouter_evenement_form.nbPoints) }}
+        </div>
     </div>
     <br/>
 
-    {{ form_row(ajouter_evenement_form.ajouter_evenement) }}
+    <div class="marginTop">
+        {{ form_row(ajouter_evenement_form.ajouter_evenement, {'attr': {'class': 'glow-on-hover smallButton'}}) }}
+
+    </div>
     <br/>
 
     {{ form_end(ajouter_evenement_form) }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/input.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/scrolldown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+
+
 {% endblock %}

@@ -3,13 +3,14 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1 class="texte"> Ajouter un nouvel athlète</h1>
 
     {{ form_start(ajouter_athlete_form) }}
+
+
     <div class="marginTop">
+        <h1 class="texte"> Ajouter un nouvel athlète</h1>
         <div class="webflow-style-input" id="prenom">
-            {{ form_label(ajouter_athlete_form.firstName, 'Prenoms') }}
-            {{ form_widget(ajouter_athlete_form.firstName) }}
+            {{ form_widget(ajouter_athlete_form.firstName, {'attr': {'placeholder': 'Prenom'}}) }}
             {{ form_errors(ajouter_athlete_form.firstName) }}
         </div>
     </div>
@@ -17,22 +18,21 @@
     <br/>
 
     <div class="webflow-style-input" id="nom">
-        {{ form_label(ajouter_athlete_form.lastName) }}&nbsp;
-        {{ form_widget(ajouter_athlete_form.lastName) }}
+        {{ form_widget(ajouter_athlete_form.lastName, {'attr': {'placeholder': 'Nom'}}) }}
         {{ form_errors(ajouter_athlete_form.lastName) }}
     </div>
     <br/>
 
     <div class="marginTop">
+        <h1 class="smalltexte"> Selectionner la catégorie </h1>
         <div id="categorie">
-            {{ form_label(ajouter_athlete_form.category) }}&nbsp;
             {{ form_widget(ajouter_athlete_form.category, {'attr': {'class': 'select'}}) }}
             {{ form_errors(ajouter_athlete_form.category) }}
         </div>
         <br/>
     </div>
 
-    <div class="marginTop2">
+    <div class="marginTop">
         {{ form_row(ajouter_athlete_form.ajouter_athlete, {'attr': {'class': 'glow-on-hover smallButton'}}) }}
         <br/>
     </div>

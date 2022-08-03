@@ -7,20 +7,20 @@
 
     <form method="post" action="{{ path("athlete_dataRechercheAthleteAction", {"clubId":clubId}) }} ">
 
+
         <div class="marginTop">
-            <h3 class="texte">Entrez le nom de l'athlète</h3>
+            <h3 class="texte">Rechercher un athlète</h3>
 
             <div class="webflow-style-input">
-                <input type="text" id="nom" name="nom" required>
+                <input type="text" id="nom" name="nom" required placeholder="Nom de l'athlète">
             </div>
         </div>
 
 
         <div class="marginTop">
-            <h3 class="texte">Entrez le prénom de l'athlète</h3>
 
             <div class="webflow-style-input">
-                <input type="text" id="prenom" name="prenom" required>
+                <input type="text" id="prenom" name="prenom" required placeholder="Prénom de l'athlète">
             </div>
         </div>
 

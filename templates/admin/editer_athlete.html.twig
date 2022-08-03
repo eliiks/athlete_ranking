@@ -3,35 +3,60 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Modifier un nouvel athlète</h1>
+    <h1 class="texte"> Modifier un nouvel athlète</h1>
 
     {{ form_start(modifier_athlete_form) }}
 
-    <div id="prenom">
-        {{ form_label(modifier_athlete_form.firstName) }}
-        {{ form_widget(modifier_athlete_form.firstName) }}
+<div class="marginTop">
+    <div class="webflow-style-input" id="prenom">
+        {{ form_widget(modifier_athlete_form.firstName, {'attr': {'placeholder': 'Prenom'}}) }}
         {{ form_errors(modifier_athlete_form.firstName) }}
     </div>
     <br/>
+</div>
 
-    <div id="nom">
-        {{ form_label(modifier_athlete_form.lastName) }}&nbsp;
-        {{ form_widget(modifier_athlete_form.lastName) }}
+<div class="marginTop">
+    <div id="nom"  class="webflow-style-input">
+        {{ form_widget(modifier_athlete_form.lastName, {'attr': {'placeholder': 'Nom'}}) }}
         {{ form_errors(modifier_athlete_form.lastName) }}
     </div>
     <br/>
+</div>
 
+<div class="marginTop">
+    <h1 class="smalltexte"> Selectionner la catégorie </h1>
     <div id="categorie">
-        {{ form_label(modifier_athlete_form.category) }}&nbsp;
-        {{ form_widget(modifier_athlete_form.category) }}
+        {{ form_widget(modifier_athlete_form.category, {'attr': {'class': 'select'}}) }}
         {{ form_errors(modifier_athlete_form.category) }}
     </div>
     <br/>
+</div>
 
-    {{ form_row(modifier_athlete_form.modifier_athlete) }}
-    <br/>
+    <div class="marginTop">
+        {{ form_row(modifier_athlete_form.modifier_athlete, {'attr': {'class': 'glow-on-hover smallButton'}}) }}
+        <br/>
+    </div>
+
+
 
     {{ form_end(modifier_athlete_form) }}
 
-    <a href="{{ path('admin_supprimer_athlete', {"id": athlete.id}) }}">Supprimer l'athlète</a>
+    <div class="marginTop">
+        <a href="{{ path('admin_supprimer_athlete', {"id": athlete.id}) }}">
+            <button class="smallButton glow-on-hover">
+                Supprimer l'athlète
+            </button>
+        </a>
+    </div>
+
 {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/input.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/scrolldown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+
+
+{% endblock %}
+

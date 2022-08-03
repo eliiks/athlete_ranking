@@ -3,26 +3,45 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <h1> Liste des evenements du club {{ app.user.club.name }} </h1>
+    <h1 class="texte"> Liste des evenements du club {{ app.user.club.name }} </h1>
 
-    <a href="{{ path("admin_ajouter_evenement") }}">Ajouter un evenement</a>
-    <br/><br/>
-    <table>
-        <thead>
-        <th> N° </th>
-        <th> Nom </th>
-        <th> Nombre de points </th>
-        <th> </th>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ event.name | upper }}</td>
-                <td>{{ event.nbPoints | capitalize}}</td>
-                <td><a href="{{ path("admin_editer_evenement", {"id": event.id}) }}">Editer</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <a href="{{ path("admin_ajouter_evenement") }}">
+        <button class="buttonSizeStandart glow-on-hover">
+            Ajouter un evenement
+        </button>
+    </a>
+
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <th> Nom</th>
+            <th> Nombre de points</th>
+            <th> Editer un événement</th>
+            </thead>
+            <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.name | upper }}</td>
+                    <td>{{ event.nbPoints | capitalize }}</td>
+                    <td>
+
+                        <a href="{{ path("admin_editer_evenement", {"id": event.id}) }}">
+                            <button class="reallySmallButton glow-on-hover">
+                                Editer
+                            </button>
+                        </a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+
 {% endblock %}
