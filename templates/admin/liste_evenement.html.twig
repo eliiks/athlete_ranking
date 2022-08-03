@@ -3,6 +3,7 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
+
     <h1 class="texte"> Liste des evenements du club {{ app.user.club.name }} </h1>
 
     <a href="{{ path("admin_ajouter_evenement") }}">
@@ -50,8 +51,13 @@
 {% endblock %}
 
 {% block stylesheets %}
+
+
     <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+
+
+
 
 {% endblock %}

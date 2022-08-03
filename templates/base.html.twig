@@ -5,6 +5,13 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+
+
+
+
+
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -15,6 +22,36 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+    {%  if app.user %}
+        <nav>
+            <a href="{{ path("accueil")}}">Accueil</a>
+            <a href="#">Classement</a>
+            <a href="#">Athlètes</a>
+            <a href="#">Evenements</a>
+            <a href="#">Profil</a>
+            <div class="animation start-home"></div>
+        </nav>
+
+    {% else %}
+        <nav>
+            <a href="{{ path("accueil")}}">Accueil</a>
+
+            <a href="#">Club</a>
+            <a href="#">Athlète</a>
+            <a href="#">Classement</a>
+            <a href="#">Connexion</a>
+            <div class="animation start-home"></div>
+        </nav>
+
+    {%  endif %}
+
+
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
+
+
+
+
