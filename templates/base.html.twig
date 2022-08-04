@@ -26,21 +26,20 @@
     {%  if app.user %}
         <nav>
             <a href="{{ path("accueil")}}">Accueil</a>
-            <a href="#">Classement</a>
-            <a href="#">Athlètes</a>
-            <a href="#">Evenements</a>
-            <a href="#">Profil</a>
+            <a href="{{ path("athlete_selectCategorieAction", {"clubId":14})}}">Classement</a>
+            <a href="{{ path("admin_liste_athlete")}}">Athlètes</a>
+            <a href="{{ path("admin_liste_evenement")}}">Evenements</a>
+            <a href="{{ path("deconnexion")}}">Deconnexion</a>
             <div class="animation start-home"></div>
         </nav>
 
     {% else %}
         <nav>
             <a href="{{ path("accueil")}}">Accueil</a>
-
-            <a href="#">Club</a>
-            <a href="#">Athlète</a>
-            <a href="#">Classement</a>
-            <a href="#">Connexion</a>
+            <a href="{{ path("athlete_listeClub")}}">Club</a>
+            <a href="{{ path("athlete_rechercheAthleteAction", {"clubId":14})}}">Rechercher</a>
+            <a href="{{ path("athlete_selectCategorieAction", {"clubId":14})}}">Classement</a>
+            <a href="{{ path("connexion")}}">Connexion</a>
             <div class="animation start-home"></div>
         </nav>
 

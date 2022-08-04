@@ -36,11 +36,15 @@ class AthleteController extends AbstractController
     /**
      * @Route("/recherche", name="_recherche")
      */
-    public function rechercheAction(): Response
+    public function rechercheAction(ManagerRegistry $doctrine): Response
     {
         if (isset($_POST["leclub"])) {
             return $this->render('athlete/recherche.html.twig', [
                 'clubId' => $_POST["leclub"]
+            ]);
+        } else {
+            return $this->render('athlete/recherche.html.twig', [
+                'clubId' => 14
             ]);
         }
     }
