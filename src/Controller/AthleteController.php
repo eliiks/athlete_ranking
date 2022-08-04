@@ -123,22 +123,29 @@ class AthleteController extends AbstractController
 
         $athleteRecherche = $athleteRep->findBy(array('club' => $clubId, 'lastName' => $_POST["nom"], 'firstName' => $_POST["prenom"]));
 
-        $allAthletes = $athleteRep->findBy(array('club' => $clubId, 'category' => $athleteRecherche[0]->getCategory()), array('nb_points' => 'DESC'));
-        $position = 0;
+        if($athleteRecherche) {
+            $allAthletes = $athleteRep->findBy(array('club' => $clubId, 'category' => $athleteRecherche[0]->getCategory()), array('nb_points' => 'DESC'));
+            $position = 0;
 
-        for ($i = 1; $i <= count($allAthletes)-1; $i++) {
-            if($allAthletes[$i] == $athleteRecherche[0]) {
-                $position = $i+1;
-                break;
+            for ($i = 1; $i <= count($allAthletes)-1; $i++) {
+                if($allAthletes[$i] == $athleteRecherche[0]) {
+                    $position = $i+1;
+                    break;
+                }
             }
+
+            return $this->render("athlete/profilAthlete.html.twig", [
+                'clubId' => $clubId,
+                'athleteRecherche' => $athleteRecherche,
+                'position' => $position,
+                'all' => $allAthletes
+            ]);
+        } else {
+            return $this->render("athlete/rechercheParAthlete.html.twig", [
+                'clubId' => $clubId
+            ]);
         }
 
-        return $this->render("athlete/profilAthlete.html.twig", [
-            'clubId' => $clubId,
-            'athleteRecherche' => $athleteRecherche,
-            'position' => $position,
-            'all' => $allAthletes
-        ]);
     }
 }
 
