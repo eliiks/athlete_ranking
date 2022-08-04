@@ -7,8 +7,24 @@
 
     <form method="post" action="{{ path("admin_associer_evenement", {"id": athlete.id}) }}">
         {% for event in events %}
-            <input type="checkbox" name="evenements[]" value="{{ event.object.id }}" {{ event.checked }}/> {{ event.object.name }} <br/>
+        <div class="boxes">
+            <input id="{{ event.object.id }}" type="checkbox" name="evenements[]" value="{{ event.object.id }}" {{ event.checked }}/>
+            <label for="{{ event.object.id }}">{{ event.object.name | upper}}</label>
+        </div>
         {% endfor %}
-        <input type="submit" value="Submit" name="submit">
+        <div class="marginTop">
+            <button type="submit"  value="Submit" name="submit" class="smallButton glow-on-hover">
+                Valider
+            </button>
+        </div>
+
     </form>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/buttonStyle.css') }}">
+
+
 {% endblock %}
